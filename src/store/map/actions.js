@@ -1,14 +1,14 @@
-import { map, takeUntil, switchMap  } from 'rxjs/operators';
+import { switchMap, takeUntil, flatMap, map } from 'rxjs/operators'; 
 import { ajax } from 'rxjs/ajax';
-import { timer, from } from 'rxjs';
 import { ofType } from 'redux-observable';
+import { interval } from 'rxjs';
 import { 
   SET_USER_LOCATION,
   START_POLLING_CARS,
   STOP_POLLING_CARS,
   GET_CARS_FULLFILLED,
 } from './actionTypes';
-import { API } from '../../constants';
+import { API, POLLING_TIME_INTERVAL } from '../../constants';
 
 export const setUserLocation = (location) => (
   {
@@ -33,16 +33,14 @@ export const getCarsFullfilled = (data) => (
 
 export const stopSearchingCars = () => ({ type: STOP_POLLING_CARS });
 
-export const fetchCarsEpic = action$ => action$.pipe(
-  ofType(START_POLLING_CARS),
-  switchMap(action => {
-    return timer(0, 3000).pipe(
-      takeUntil(action$.pipe(
-        ofType(STOP_POLLING_CARS)
-      )), 
-      switchMap(() => from(ajax.getJSON(`${API}/vehicles?lat=${action.location.lat}&lng=${action.location.lng}`)),
-        map(response => getCarsFullfilled(response))
-      )
-    )
-  })
-)
+export const fetchCarsEpic = action$ =>
+  action$.pipe(
+    ofType(START_POLLING_CARS),
+    switchMap(action => interval(POLLING_TIME_INTERVAL).pipe(
+      flatMap(() => 
+        ajax({ url: `${API}/vehicles?lat=${action.location.lat}&lng=${action.location.lng}`, crossDomain: true })
+          .pipe(map(res => getCarsFullfilled(res.response)))  
+      ),
+      takeUntil(action$.ofType(STOP_POLLING_CARS))
+    )),
+  )

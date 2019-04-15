@@ -1,24 +1,53 @@
 import React from 'react';
 
-const AddressesList = ({ addresses, onStartCarsSearch }) => {
-  return (
-    <div className="addresses-list">
-      <ul className="collection">
-        {addresses.map(address => (
-          <a 
-            key={address.id} 
+import { ICON_TYPES } from '../constants';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const AddressesList = ({ 
+  addresses, 
+  onStartCarsSearch,
+  onSetUserLocation,
+  onSelectAddress,
+}) => {
+
+  const addressInfo = (address) => {
+    const info = `${address.streetName}, ${address.city}, ${address.countryCode}`;
+    return <span>{info}</span>
+  }
+  
+
+  const renderAddressesList = (addresses) => {
+    const getAddressTypeIcon = (address) => {
+      return ICON_TYPES[address.type].split(' ');
+    }
+
+    return (
+      addresses.map(address => (
+        <li key={address.id} className="addresses-list__item">
+          <div className="addresses-list__icon">
+            <FontAwesomeIcon icon={getAddressTypeIcon(address)} />
+          </div>
+          <a
             href="#!" 
             className="collection-item"
             onClick={(e) => {
               e.preventDefault();
               onStartCarsSearch({ lat: address.latitude, lng: address.longitude });
+              onSetUserLocation({ lat: address.latitude, lng: address.longitude });
+              onSelectAddress(address);
             }}
           >
-            Street: {address.streetName}, 
-            latitude: {address.latitude},
-            longitude: {address.longitude}
+            {addressInfo(address)}
           </a>
-        ))}
+        </li>
+      ))
+    )
+  }
+
+  return (
+    <div className="addresses-list">
+      <ul className="addresses-list__list">
+        {renderAddressesList(addresses)}
       </ul>
     </div>
   )

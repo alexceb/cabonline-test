@@ -8,6 +8,7 @@ import { GET_ADDRESSES_FULLFILLED, SELECT_ADDRESS } from './actionTypes';
 */
 const initialState = {
   searchResult: [],
+  selectedAddress: {},
 }
 
 const addresses = (state = initialState, action) => {
@@ -16,11 +17,13 @@ const addresses = (state = initialState, action) => {
       return {
         ...state,
         searchResult: action.data,
+        selectedAddress: {},
       };
     case SELECT_ADDRESS:
       return { 
         ...state, 
         selectedAddress: action.address,
+        searchResult: [],
       };
     default:
       return state;

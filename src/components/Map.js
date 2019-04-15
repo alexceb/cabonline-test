@@ -14,6 +14,20 @@ class Map extends Component {
     super();
 
     this.renderCars = this.renderCars.bind(this);
+    this.setUserLocation = this.setUserLocation.bind(this);
+  }
+
+  componentWillMount() {
+    this.setUserLocation();
+  }
+
+  setUserLocation() {
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const coords = pos.coords;
+        this.props.onSetUserLocation({ lat: coords.latitude, lng: coords.longitude });
+      })
+    }
   }
 
   renderCars(cars) {
@@ -32,7 +46,7 @@ class Map extends Component {
 
   render() {
     return (
-      <div style={{ height: '100vh', width: '70%', marginLeft: '30%'}}>
+      <div style={{ height: '100vh', width: '100%'}}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: API_KEY }}
           zoom={this.props.zoom}

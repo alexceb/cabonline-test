@@ -18,12 +18,80 @@ code {
   display: flex;
 }
 
-.search-form {
-  width: 30%;
-  position: fixed;
-  z-index: 2;
-  padding: 0 1rem;
+.search-box {
+  margin: 0.4rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 375px;
+  min-width: 225px;
   background: #fff;
-  height: 100vh;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
+}
+
+.search-form {
+  padding: 0.5rem 3rem 0.5rem 3rem;
+}
+
+.search-form input {
+  border: none;
+  line-height: 1.9rem;
+  height: 1.9rem;
+  width: 100%;
+  outline: none;
+  font-size: 0.9rem;
+  padding: 0;
+}
+
+.search-form input:focus {
+  border: none;
+}
+
+.addresses-list {
+  position: relative;
+  border-top: 1px solid #ccc;
+  max-height: 30rem;
   overflow-y: scroll;
+}
+
+.addresses-list > .addresses-list__list {
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  list-style: none;
+}
+
+.addresses-list__list .addresses-list__item {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 0 0 3rem;
+  font-size: 0.8rem;
+  position: relative;
+}
+
+.addresses-list__item > a {
+  display: block;
+  border-bottom: 1px solid #ccc;
+  height: 40px;
+  line-height: 40px;
+  color: #000;
+  text-decoration: none;
+}
+
+.addresses-list__icon,
+.search-box__icon {
+  position: absolute;
+  left: 1rem;
+  color: #5d5d5d;
+  font-size: 1.2rem;
+}
+
+.error {
+  position: absolute;
+    font-size: 0.7rem;
+    color: red;
+    top: 1rem;
+    right: 2rem;
 }

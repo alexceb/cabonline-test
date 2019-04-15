@@ -1,8 +1,11 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCar, faMale } from '@fortawesome/free-solid-svg-icons';
+
+import { faCar, faMale, faRoad, faBuilding, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faCar,
   faMale,
+  faRoad,
+  faBuilding,
+  faSearch,
 );

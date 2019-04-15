@@ -1,6 +1,7 @@
 import AddressesList from '../components/AddressesList';
 import { connect } from 'react-redux';
-import { getAvailableCars } from '../store/map/actions';
+import { getAvailableCars, setUserLocation } from '../store/map/actions';
+import { handleSelectAddress } from '../store/addresses/actions';
 
 const mapStateToProps = ({ addresses }) => {
   return {
@@ -11,6 +12,8 @@ const mapStateToProps = ({ addresses }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onStartCarsSearch: (location) => dispatch(getAvailableCars(location)),
+    onSetUserLocation: (location) => dispatch(setUserLocation(location)),
+    onSelectAddress: (address) => dispatch(handleSelectAddress(address)),
   }
 };
 

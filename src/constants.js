@@ -9,4 +9,11 @@ export const DEFAULT_MAP_CONFIG = {
   zoom: 12
 };
 
+export const ICON_TYPES = {
+  road: 'fas road',
+  institution: 'fas building',
+}
+
+export const POLLING_TIME_INTERVAL = 3000;
+
 export const USER_LOCATION_ZOOM_RATE = 15;
